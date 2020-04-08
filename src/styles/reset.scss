@@ -1,0 +1,36 @@
+:root{
+  --bg: #0D1014;
+  --bg-light: #161A22;
+  --bg-lighter: #1C212B;
+
+  --text: #a3a3a3;
+  --text-dark: #666666;
+  --text-light: #b5b5b5;
+
+  --red: #FF363b;
+  --green: #09A931;
+  --white: #ffffff;
+
+
+  --border: #292E37;
+}
+
+html,body {
+  height: 100%;
+}
+body{
+  padding: 20px;
+  font-size: 16px;
+  font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+body *{
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+ul,li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
