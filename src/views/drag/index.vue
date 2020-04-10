@@ -4,7 +4,7 @@
     <div class="header-container">
       <div>备选字段</div>
       <div>
-        <span>合并</span>
+        <span>合并d</span>
         <span>拆分</span>
         <span>插入列</span>
         <span>删除列</span>
@@ -121,7 +121,7 @@ export default {
     }
   },
   methods: {
-    click() {r
+    click() {
       alert(123)
     },
     // 左边
@@ -131,14 +131,13 @@ export default {
       this.cur = this.listData[this.startIndex].text
     },
     onDragend(e) {
-      console.log('end')
       this.listData.splice(this.startIndex, 1, {})
     },
     // 目标元素
     onDrop(e) {
       e.target.innerText = this.cur
-      debugger
-      e.target.parentNode.nextSibling.children[0].innerHTML = '<input placeholder="woshish"></input>'
+      e.target.parentNode.nextSibling.children[0].innerHtml = '<input placeholder="woshish"></input>'
+      // e.target.parentNode.nextSibling.children[0].innerText = '<input placeholder="woshish"></input>'
     },
     onDragover(e) {
       e.preventDefault()

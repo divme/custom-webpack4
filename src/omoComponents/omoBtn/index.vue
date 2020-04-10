@@ -31,7 +31,7 @@ export default {
       'div',
       {
         class: ['btn', this.type, this.size],
-        nativeOn: {
+        on: {
           click: this.click
         }
       },

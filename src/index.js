@@ -9,7 +9,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import router from './router'
 
-import '@/omoComponents' // 组件
+import '@/omoComponents' // 注册全局组件
 
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
@@ -18,4 +18,7 @@ new Vue({
   el: '#app',
   router,
   render: h => h(App)
-})
+});
+// if(module && module.hot) {
+//   module.hot.accept()
+// }
