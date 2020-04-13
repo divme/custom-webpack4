@@ -8,14 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-
-// 优化
-// 多核： 启用 thread-loader
-
-// 未启用优化: 多核 和 硬盘缓存，在项目没达到一定量级时不建议开启
-// const Happypack = require('happypack');
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-
 const config = {
     entry: path.resolve(__dirname, "../src/index.js"),
     // entry: "./sscsrc/entry/main.js",
@@ -24,30 +16,44 @@ const config = {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/'
     },
+    cache: true,
+    stats: {
+        all: false,
+        assets: true,
+        cached: false,
+        cachedAssets: false,
+        chunks: false,
+        chunkGroups: false,
+        builtAt: true
+    },
     // 分隔代码块，先dll，然后合并node_modules公共模块，然后src下公共部分
     optimization: {
         splitChunks: { //分割代码块
             chunks: 'all',
+            name: 'omo',
             cacheGroups: {
-                vendor: { //第三方依赖
-                    priority: 1,
-                    name: 'vendor',
-                    test: /node_modules/,
-                    chunks: 'initial',
-                    minSize: 100,
-                    minChunks: 1 //重复引入了几次
-                },
+                // vendor: { //第三方依赖
+                //     priority: 1,
+                //     name: 'v',
+                //     test: /node_modules/,
+                //     chunks: 'initial',
+                //     maxSize: 420000,
+                //     minSize: 100,
+                //     minChunks: 1 //重复引入了几次
+                // },
                 app: {
                     name: 'app',
-                    chunks: 'initial',
+                    chunks: 'all',
+                    test: path.resolve(__dirname, '../src/entry'),
                     reuseExistingChunk: true,
-                    minSize: 100,
-                    minChunks: 2 //重复引入了几次
+                    maxSize: 400000,
+                    minSize: 100000,
+                    minChunks: 1 //重复引入了几次
                 }
             }
         },
         runtimeChunk: {
-            name: 'mainifest'
+            name: 'omoruntime'
         }
     },
     // 模块的引用规则
@@ -79,7 +85,7 @@ const config = {
             // 常规项的解析：Js[x] [s]css img font
             {
                 test: /\.js[x]?$/,
-                exclude: /node_modules/,
+                // exclude: /node_modules/,
                 include: [path.resolve(__dirname, '../src')],
                 use: [{
                     loader: 'babel-loader',
@@ -125,9 +131,9 @@ const config = {
             filename: 'index.html',
             cache: true,
             minify: { // 模板页压缩选项
-                collapseWhitespace: true, // 移除空格
-                removeComments: true, // 移除注释
-                removeAttributeQuotes: true // 移除双引号
+                collapseWhitespace: false, // 移除空格
+                removeComments: false, // 移除注释
+                removeAttributeQuotes: false // 移除双引号
             }
         }),
         new CleanWebpackPlugin({
@@ -149,21 +155,13 @@ const config = {
         //     // Vue: ['vue/dist/vue.esm.js', 'default'],
         //     $: 'jquery'
         // }),
-        // 定义环境变量
-        // new webpack.DefinePlugin(),
+
         // vue 单页应用其他js css规则
         new VueLoaderPlugin(),
 
-
-        //--------- 优化项：-----------------
-        // 1. Dll + optimization.splitChunks
-        new webpack.DllReferencePlugin({
-            manifest: require(path.resolve(__dirname, '../dist/dll', 'manifest.json'))
-        }),
+        //--------- 公共优化项：-----------------
         // 4. 忽略模块中无用引用
-        // new webpack.IgnorePlugin(/\.\/locale/, /moment/),
-        // 5. 缓存 loader 编译过程中的中间结果
-        // new HardSourceWebpackPlugin()
+        // new webpack.IgnorePlugin(/\.\/locale/, /moment/)
     ]
 }
 

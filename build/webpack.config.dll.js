@@ -2,11 +2,12 @@ var path = require("path");
 var webpack = require("webpack");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
   mode: "production",
   entry: {
     // 把 vue 模块放到一个单独的dll文件中
-    vues: ["vue", "vue-router", "vuex", "element-ui"],
+    family: ["vue/dist/vue.esm.js", "vue-router", "vuex", "element-ui"],
     common: ["core-js", "lodash", "moment"]
 
   },
@@ -20,15 +21,23 @@ module.exports = {
     // 拼接一个8位hash的目的是为了防止全局变量冲突。
     library: "[name]_[hash:8]"
   },
+  stats: {
+    all: false,
+    assets: true,
+    cached: false,
+    cachedAssets: false,
+    builtAt: true
+  },
   resolve: {
     alias: {
-      "vue": "vue/dist/vue.esm.js"
+      // "vue": "vue/dist/vue.esm.js"
     }
   },
   plugins: [
     // 每次进行预编译前先将旧的dll文件清空。
     new CleanWebpackPlugin(),
     new TerserWebpackPlugin(),
+    new BundleAnalyzerPlugin(),
     new webpack.DllPlugin({
       // context: __dirname, // 定义manifest定义依赖时的根路径
       // context: __dirname,

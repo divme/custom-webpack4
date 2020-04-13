@@ -1,11 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 
 // 性能分析
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-// 性能优化
+// 开发模式性能优化
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const baseWebpackConfig = require('./webpack.config.base');
@@ -13,7 +14,11 @@ const baseWebpackConfig = require('./webpack.config.base');
 const extraPlugins = [];
 // 是否启用性能分析
 if (process.env.env_feature === 'analysis') extraPlugins.push(new BundleAnalyzerPlugin());
-
+if (process.env.env_feature !== 'server') {
+  extraPlugins.push(new webpack.DllReferencePlugin({
+    manifest: require(path.resolve(__dirname, '../dist/dll', 'manifest.json'))
+  }));
+}
 // 本地服务
 const devServer = {
     host: 'localhost',
@@ -72,8 +77,9 @@ const config = merge(baseWebpackConfig, {
       ]
     },
     plugins: [
-      ...extraPlugins,
       // new HardSourceWebpackPlugin(),
+      // new webpack.DefinePlugin(),
+      ...extraPlugins
     ]
     //...其它的一些配置
 });
