@@ -7,7 +7,7 @@ const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 开发模式性能优化
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const baseWebpackConfig = require('./webpack.config.base');
 
@@ -77,7 +77,7 @@ const config = merge(baseWebpackConfig, {
       ]
     },
     plugins: [
-      // new HardSourceWebpackPlugin(),
+      new HardSourceWebpackPlugin(),
       // new webpack.DefinePlugin(),
       ...extraPlugins
     ]

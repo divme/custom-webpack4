@@ -13,6 +13,7 @@ const config = {
     // entry: "./sscsrc/entry/main.js",
     output: {
         filename: 'js/[name].[hash:6].js',
+        chunkFilename: "js/[name].[contenthash:6].js",
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/'
     },
@@ -30,21 +31,44 @@ const config = {
     optimization: {
         splitChunks: { //分割代码块
             chunks: 'all',
-            name: 'omo',
+            // automaticNameDelimiter: '-',
             cacheGroups: {
-                // vendor: { //第三方依赖
-                //     priority: 1,
-                //     name: 'v',
-                //     test: /node_modules/,
-                //     chunks: 'initial',
-                //     maxSize: 420000,
-                //     minSize: 100,
-                //     minChunks: 1 //重复引入了几次
-                // },
+                vendor1: { //第三方依赖
+                    priority: 10,
+                    name: 'element',
+                    // name(module, chunks, key) {
+                    //   return 'element';
+                    // },
+                    test: /element-ui/,
+                    // maxSize: 420000,
+                    minSize: 100,
+                    minChunks: 1 //重复引入了几次
+                },
+                vendor2: { //第三方依赖
+                    priority: 5,
+                    name: 'vue',
+                    // name(module, chunks, key) {
+                    //   return 'vue';
+                    // },
+                    test: /vue|vuex|vue-router/,
+                    maxSize: 420000,
+                    minSize: 100,
+                    minChunks: 1 //重复引入了几次
+                },
+                vendor: { //第三方依赖
+                    priority: 1,
+                    name: 'omo',
+                    // name(module, chunks, key) {
+                    //   return 'omo';
+                    // },
+                    test: /node_modules/,
+                    // maxSize: 420000,
+                    minSize: 100,
+                    minChunks: 1 //重复引入了几次
+                },
                 app: {
                     name: 'app',
-                    chunks: 'all',
-                    test: path.resolve(__dirname, '../src/entry'),
+                    test: /src/,
                     reuseExistingChunk: true,
                     maxSize: 400000,
                     minSize: 100000,
@@ -130,6 +154,7 @@ const config = {
             template: './template/index.html',
             filename: 'index.html',
             cache: true,
+            inject: false,
             minify: { // 模板页压缩选项
                 collapseWhitespace: false, // 移除空格
                 removeComments: false, // 移除注释

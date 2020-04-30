@@ -34,6 +34,7 @@ const config = merge(baseWebpackConfig, {
         minimize: true,
         minimizer: [new TerserWebpackPlugin({
             parallel: true,
+            cache: false,
             test: /\.js(\?.*)?$/i
         })]
     },
