@@ -10,7 +10,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const config = {
     entry: path.resolve(__dirname, "../src/index.js"),
-    // entry: "./sscsrc/entry/main.js",
     output: {
         filename: 'js/[name].[hash:6].js',
         chunkFilename: "js/[name].[contenthash:6].js",
@@ -154,7 +153,7 @@ const config = {
             template: './template/index.html',
             filename: 'index.html',
             cache: true,
-            inject: false,
+            // inject: false,
             minify: { // 模板页压缩选项
                 collapseWhitespace: false, // 移除空格
                 removeComments: false, // 移除注释
