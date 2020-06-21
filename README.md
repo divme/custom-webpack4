@@ -1,3 +1,3 @@
 # custom-webpack4
 
-custom configuration witdh webpack 4.0+
+custom configuration with webpack 4.0+
