@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style scoped>
+	#home{
+		font-size: 15px;
+	}
   .side {
     background: url("../../assets/via.jpg") no-repeat right top;
     background-size: 50px 50px;

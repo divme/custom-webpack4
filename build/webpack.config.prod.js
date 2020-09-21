@@ -82,9 +82,9 @@ const config = merge(baseWebpackConfig, {
         new OptimizeCssPlugin(),
         // 生产模式优化
         // 1. Dll + optimization.splitChunks
-        new webpack.DllReferencePlugin({
-            manifest: require(path.resolve(__dirname, '../dist/dll', 'manifest.json'))
-        }),
+        // new webpack.DllReferencePlugin({
+        //     manifest: require(path.resolve(__dirname, '../dist/dll', 'manifest.json'))
+        // }),
         ...extraPlugins
     ]
     //...其它的一些配置

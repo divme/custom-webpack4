@@ -18,13 +18,20 @@ const config = {
     },
     cache: true,
     stats: {
-        all: false,
-        assets: true,
-        cached: false,
-        cachedAssets: false,
-        chunks: false,
-        chunkGroups: false,
-        builtAt: true
+        // all: false, // stats所有字段均置为false
+        assets: true, // 显示打包后文件信息
+        builtAt: true, // build的时间显示 Built at: 2020-09-21 18:42:26
+        entrypoints: false, // 显示入口信息，一行 Entrypoint main = main.js
+
+        cached: true,
+        cachedAssets: true,
+
+        modules: false, // 显示构建模块信息，那一大串很烦人的，和下面三个相辅相成，有一定关系
+        // chunks: false, // 显示每个chunk group的大体信息，一行
+        // chunkModules: false, // 将模块的具体信息显示在chunk下面
+        // chunkGroups: false // 显示chunk group的分组情况，一组一行，相当于标头
+
+        children: false, // children信息，最底下的插件如 html-webpack-plugin等的信息
     },
     // 分隔代码块，先dll，然后合并node_modules公共模块，然后src下公共部分
     optimization: {

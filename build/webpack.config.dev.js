@@ -11,6 +11,8 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const baseWebpackConfig = require('./webpack.config.base');
 
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+
 const extraPlugins = [];
 // 是否启用性能分析
 if (process.env.env_feature === 'analysis') extraPlugins.push(new BundleAnalyzerPlugin());
@@ -32,13 +34,22 @@ const devServer = {
 
 const config = merge(baseWebpackConfig, {
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval',
     devServer,
     // stats: 'errors-only',
     // stats: {
     //     assets: true,
     //     chunks: false
     // },
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserWebpackPlugin({
+        parallel: true,
+        cache: false,
+        test: /\.js(\?.*)?$/i
+      })]
+    },
     module: {
       rules: [
         {
